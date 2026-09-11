@@ -121,39 +121,40 @@ class ExportarService {
       List<Movimiento> movimientos,
       Negocio negocio, [
         RangoExport rango = RangoExport.todo,
-      ]) => [
-    ..._encabezado(negocio, 'Historial de movimientos · ${rango.etiqueta}'),
-    [
-      'Fecha',
-      'Qué pasó',
-      'Código',
-      'Producto',
-      'Cantidad',
-      'Antes',
-      'Después',
-      'Motivo',
-      'Factura o nota',
-      'Cliente',
-    ],
-    ...movimientos.where((m) => rango.incluye(m.fecha)).map(
-          (m) => [
-        fechaCorta(m.fecha),
-        m.tipoMovimiento == 'ENTRADA'
-            ? 'Entró'
-            : m.tipoMovimiento == 'SALIDA'
-            ? 'Salió'
-            : 'Corrección',
-        m.codigoRef,
-        m.productoNombre,
-        m.cantidad,
-        m.stockAntes,
-        m.stockDespues,
-        m.motivo,
-        m.referencia,
-        clienteExcel(m),
-      ],
-    ),
-  ];
+      ]) =>
+      [
+        ..._encabezado(negocio, 'Historial de movimientos · ${rango.etiqueta}'),
+        [
+          'Fecha',
+          'Qué pasó',
+          'Código',
+          'Producto',
+          'Cantidad',
+          'Antes',
+          'Después',
+          'Motivo',
+          'Factura o nota',
+          'Cliente',
+        ],
+        ...movimientos.where((m) => rango.incluye(m.fecha)).map(
+              (m) => [
+            fechaCorta(m.fecha),
+            m.tipoMovimiento == 'ENTRADA'
+                ? 'Entró'
+                : m.tipoMovimiento == 'SALIDA'
+                ? 'Salió'
+                : 'Corrección',
+            m.codigoRef,
+            m.productoNombre,
+            m.cantidad,
+            m.stockAntes,
+            m.stockDespues,
+            m.motivo,
+            m.referencia,
+            clienteExcel(m),
+          ],
+        ),
+      ];
 
   static Border get _borde => Border(
     borderStyle: BorderStyle.Thin,
@@ -265,14 +266,7 @@ class ExportarService {
     if (soloPro && !store.negocio.esPro) return false;
 
     if (contarComoReporte && !store.negocio.esPro) {
-      final seguir = await showDialog<bool>(
-        context: context,
-        barrierDismissible: false,
-        builder: (ctx) => AdGate(
-          onAdFinished: () => Navigator.of(ctx).pop(true),
-          onPreferPro: () => Navigator.of(ctx).pop(false),
-        ),
-      );
+      final seguir = await anuncioSiGratis(context, esPro: false);
       if (seguir != true) return false;
     }
 
