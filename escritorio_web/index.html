@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rapistock</title>
+<style>
+:root{--forest:#1B4D3E;--bg:#F3EFE6;--ink:#1C2420;--muted:#5C675F;--warn:#9A5B12;--bad:#A61F1A;--ok:#1F6B45;--pro:#9A5B12}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{font-family:system-ui,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+.stick{position:sticky;top:0;z-index:30}
+header.top{background:var(--forest);color:#fff;padding:8px 20px 6px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+header.top .brand{min-width:0}
+header.top small{opacity:.72;letter-spacing:.1em;text-transform:uppercase;font-size:10px}
+header.top h1{margin:1px 0 0;font-size:18px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+header.top .meta{opacity:.8;font-size:12px;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:56vw}
+.money{text-align:right;flex:0 0 auto}
+.hero{font-size:20px;font-weight:800;line-height:1.1}
+.money .sub{opacity:.8;font-size:12px;margin-top:2px}
+nav.tabs{display:flex;gap:0;background:var(--forest);padding:0 8px;overflow:auto}
+nav.tabs button{flex:1;min-width:78px;background:transparent;border:0;color:#cde5db;padding:8px 6px 9px;font-weight:700;cursor:pointer;border-bottom:3px solid transparent;font-size:14px}
+nav.tabs button.on{color:#fff;border-bottom-color:#FFE08A}
+main{max-width:1120px;margin:0 auto;padding:12px 16px 20px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:0 0 14px}
+.kpi,section,.card{background:#fff;border-radius:14px;padding:14px 16px}
+.kpi b{display:block;font-size:22px}
+.kpi span{color:var(--muted);font-size:12px}
+section{margin-bottom:14px}
+h2{margin:0 0 8px;font-size:16px}
+h3{margin:16px 0 8px;font-size:14px}
+.muted{color:var(--muted);font-size:13px;line-height:1.4}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:end}
+.row label{display:flex;flex-direction:column;font-size:12px;color:var(--muted);gap:4px}
+input,select,textarea,button{font:inherit}
+input,select,textarea{padding:8px 10px;border:1px solid #ddd;border-radius:8px}
+button{cursor:pointer;border:0;border-radius:8px;padding:8px 12px;font-weight:700}
+.go{background:var(--forest);color:#fff}
+.sale{background:var(--ink);color:#fff}
+.in{background:var(--ok);color:#fff}
+.ghost{background:#fff;border:1px solid #ddd;color:var(--ink)}
+.danger{background:var(--bad);color:#fff}
+.pro{background:var(--pro);color:#FFF8EB}
+#q,.full,#hq,#cq{width:100%;margin-bottom:10px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:8px 6px;border-bottom:1px solid #eee;vertical-align:middle}
+th{color:var(--muted);font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+.n{text-align:right;font-variant-numeric:tabular-nums}
+.bad{color:var(--bad);font-weight:700;font-size:12px}
+.warn{color:var(--warn);font-weight:700;font-size:12px}
+.ok{color:var(--ok);font-weight:700}
+.banner{padding:10px 14px;border-radius:10px;margin-bottom:12px}
+.okb{background:#e4f5ea;color:var(--ok)}
+.badb{background:#fde8e7;color:var(--bad)}
+.wrap{overflow:auto}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.chip{border:1px solid #ddd;background:#fff;border-radius:99px;padding:6px 12px;font-size:13px}
+.chip.on{background:var(--forest);color:#fff;border-color:var(--forest)}
+.list .item,.item{display:flex;gap:12px;align-items:center;padding:8px 0;border-bottom:1px solid #eee}
+.list .item b,.item b{display:block}
+.qty{display:flex;align-items:center;gap:6px}
+.qty b{min-width:24px;text-align:center}
+.fab{position:fixed;right:24px;bottom:24px;background:var(--forest);color:#fff;border-radius:999px;padding:14px 18px;box-shadow:0 8px 24px #1B4D3E44;z-index:15}
+.mask{position:fixed;inset:0;background:#0006;display:flex;align-items:center;justify-content:center;z-index:50;padding:16px}
+.sheet{background:#fff;width:min(560px,100%);max-height:88vh;overflow:auto;border-radius:16px;padding:16px 16px 20px}
+.sheet h2{margin-bottom:12px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.center{min-height:70vh;display:flex;align-items:center;justify-content:center;padding:24px}
+.cardc{background:#fff;padding:32px;border-radius:16px;max-width:440px;text-align:center}
+footer{text-align:center;color:var(--muted);padding:20px;font-size:12px}
+.bar{height:120px;display:flex;align-items:flex-end;gap:6px}
+.bar .d{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}
+.bar i{display:block;width:40%;min-height:4px}
+.e{background:var(--ok)}.s{background:var(--ink)}
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:25;background:#fff;border-top:1px solid #e5e0d6;padding:10px 16px 12px;box-shadow:0 -8px 24px #1B4D3E22}
+.dock .row{max-width:1120px;margin:0 auto;align-items:center}
+
+@media (max-width: 800px){
+  header.top{flex-wrap:wrap;gap:6px 12px;padding:8px 14px 6px}
+  .money{text-align:left}
+  header.top .meta{max-width:100%}
+}
+@media (max-width: 700px){
+  .grid2{grid-template-columns:1fr}
+  .fab{right:12px;bottom:12px}
+  .mask{align-items:flex-end;padding:0}
+  .sheet{width:100%;border-radius:16px 16px 0 0;max-height:86vh}
+  nav.tabs button{min-width:72px;font-size:13px}
+}
+@media (max-height: 700px){
+  header.top{padding:6px 16px 4px}
+  header.top h1{font-size:16px}
+  .hero{font-size:18px}
+  nav.tabs button{padding:6px 6px 7px}
+  main{padding:10px 14px 16px}
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="center"><div class="cardc"><h1>Rapistock</h1><p>Abre esta pagina desde el celular (el QR).</p></div></div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
