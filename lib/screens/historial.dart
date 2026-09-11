@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import '../data/exportar.dart';
 import '../data/format.dart';
 import '../data/store.dart';
-import '../models/types.dart';
 import '../theme.dart';
 
 class HistorialPantalla extends StatefulWidget {

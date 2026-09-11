@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-import '../theme.dart';
 
 /// IDs reales de Rapistock en AdMob.
 /// En debug (Run de Android Studio) se usan anuncios de PRUEBA de Google

@@ -8,7 +8,11 @@ import 'theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await MobileAds.instance.initialize();
+  try {
+    await MobileAds.instance.initialize();
+  } catch (e, st) {
+    debugPrint('AdMob init falló: $e\n$st');
+  }
   runApp(const RapistockApp());
 }
 
